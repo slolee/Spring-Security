@@ -12,15 +12,15 @@ internal data class Account (
         private val username: String? = null,
 
         @Column(name = "ACCOUNT_LOGIN_ID")
-        private val userId: String? = null,
+        val userId: String? = null,
 
         @Column(name = "ACCOUNT_PASSWORD")
-        private val password: String? = null,
+        val password: String? = null,
 
         @Column(name = "ACOCUNT_ROLE")
         // @Enumerated(value = EnumType.ORDINAL) // Index로 넣는다. 명시적이지 않아서 순서가 바뀌거나 나중에 유지보수하기 힘들다.
         @Enumerated(value = EnumType.STRING)
-        private val userRole: UserRole? = null,
+        val userRole: UserRole? = null,
 
         @Column(name = "ACCOUNT_SOCIAL_ID")
         private val socialID: Long? = null,
