@@ -11,14 +11,13 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Component
 public class FormLoginAuthenticationProvider implements AuthenticationProvider {
-
-    @Autowired
-    private AccountContextService accountContextService;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -34,6 +33,7 @@ public class FormLoginAuthenticationProvider implements AuthenticationProvider {
         String password = token.getPassword();
 
         Account account = accountRepository.findByUserId(username).orElseThrow(() -> new NoSuchElementException("정보에 맞는 계정이 없습니다."));
+
         if (checkPassword(password, account)) {
             return PostAuthorizationToken.getTokenFromAccountContext(AccountContext.fromAccountModel(account));
         }
@@ -48,6 +48,6 @@ public class FormLoginAuthenticationProvider implements AuthenticationProvider {
 
     private boolean checkPassword(String password, Account account) {
         // 원본이 앞에와야함!! 주의주의!!
-        return passwordEncoder.matches(account.getPassword(), password);
+        return passwordEncoder.matches(password, account.getPassword());
     }
 }
