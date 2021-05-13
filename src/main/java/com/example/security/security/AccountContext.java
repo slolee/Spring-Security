@@ -5,7 +5,6 @@ import com.example.security.domain.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,12 +19,20 @@ public class AccountContext extends User {
         this.account = account;
     }
 
+    public AccountContext(String username, String role) {
+        super(username, "1234", parseAuthorities(role));
+    }
+
     public static AccountContext fromAccountModel(Account account) {
         return new AccountContext(account, account.getUserId(), account.getPassword(), parseAuthorities(account.getUserRole()));
     }
 
     public static List<SimpleGrantedAuthority> parseAuthorities(UserRole role) {
         return Arrays.asList(role).stream().map(r -> new SimpleGrantedAuthority((r.getRoleName()))).collect(Collectors.toList());
+    }
+
+    public static List<SimpleGrantedAuthority> parseAuthorities(String role) {
+        return parseAuthorities(UserRole.getRoleByName(role));
     }
 
     public Account getAccount() {

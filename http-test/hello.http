@@ -1,4 +1,3 @@
-GET http://127.0.0.1:8080/login
-Authorization: Bearer token_value
-
+GET http://127.0.0.1:8080/api/hello
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciO1JIUzI1NiJ9.eyJpc3MiOiJjaDRuanVuIiwiVVNFUk5BTUUiOiJzbG9sZWVAbmF2ZXIuY29tIiwiVVNFUl9ST0xFIjoiUk9MRV9VU0VSIn0.cdDXJa6HVWFKU69FcggIKz7pOgUqC_MNIeXnrghkHTs
 ###
