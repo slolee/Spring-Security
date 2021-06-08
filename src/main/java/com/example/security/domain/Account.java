@@ -20,9 +20,9 @@ public class Account {
 
     private String username;
 
-    private String userId = "slolee@naver.com";
+    private String userId;
 
-    private String password = "cks14579";
+    private String password;
 
     private UserRole userRole = UserRole.USER;
 

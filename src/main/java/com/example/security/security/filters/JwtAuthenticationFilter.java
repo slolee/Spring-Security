@@ -35,14 +35,15 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         this.extractor = extractor;
     }
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException, IOException, ServletException {
+    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
         String tokenPayload = req.getHeader("Authorization");
         JwtPreProcessingToken token = new JwtPreProcessingToken(this.extractor.extract(tokenPayload));
         return super.getAuthenticationManager().authenticate(token);
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
+            throws IOException, ServletException {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authResult);
 
@@ -52,8 +53,9 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed)
+            throws IOException, ServletException {
         SecurityContextHolder.clearContext();
-        this.unsuccessfulAuthentication(request, response, failed);
+        this.failureHandler.onAuthenticationFailure(request, response, failed);
     }
 }

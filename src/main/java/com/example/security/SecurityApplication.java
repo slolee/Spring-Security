@@ -19,6 +19,8 @@ public class SecurityApplication {
     CommandLineRunner bootstrapTestAccount(AccountRepository repository, PasswordEncoder passwordEncoder) {
         return args -> {
             Account account = new Account();
+            account.setUserId("slolee@naver.com");
+            account.setUsername("ch4njun");
             account.setPassword(passwordEncoder.encode("cks14579"));
             repository.save(account);
         };
